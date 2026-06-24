@@ -214,7 +214,7 @@ Maximiser $l$ donne les mêmes estimateurs $\hat{a}_{ML} = \hat{a}_{MCO}$ et $\h
 
 \section{Distributions, Moments \& Estimations}
 
-\scalebox{.8}{
+\scalebox{.875}{
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 \textbf{Loi} & \textbf{Support} & $f(x)$ ou $\mathbb{P}(X=x)$ & $\mathbb{E}(X)$ & $Var(X)$ \\ \midrule
@@ -247,6 +247,9 @@ Rejet $H_0 \iff t_{\text{obs}} > \chi^2_{\nu, \; 1-\alpha}$ \quad $p_{\text{obs}
 \textbf{Indépendance (Contingence)} : Caractères $A$ ($h$ classes), $B$ ($k$ classes).
 $$e_{ij} = \frac{n_{i\cdot} n_{\cdot j}}{n} \implies t_{\text{obs}} = \sum_{i=1}^{h} \sum_{j=1}^{k} \frac{(n_{ij} - e_{ij})^2}{e_{ij}}$$
 $\nu = (h-1)(k-1)$ \quad Rejet $\iff t_{\text{obs}} > \chi^2_{(h-1)(k-1), \; 1-\alpha}$.
+
+\textbf{Markov} : Soit $X$ une variable aléatoire positive ($X \ge 0$) et $a > 0$ :
+$$\mathbb{P}(X \ge a) \le \frac{\mathbb{E}(X)}{a}$$
 
 \end{multicols*}
 
