@@ -1,0 +1,254 @@
+\documentclass[9pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\geometry{margin=0.6cm,top=0.6cm,bottom=0.6cm}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{graphicx} % Pour ajuster automatiquement la taille du tableau
+
+% Définition de couleurs compactes et professionnelles
+\definecolor{secColor}{RGB}{16, 44, 87}       % Bleu nuit profond pour les sections
+\definecolor{subsecColor}{RGB}{0, 95, 115}    % Bleu canard pour les sous-sections
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.8pt} % Augmenté très légèrement pour éviter les chevauchements de texte
+\setlength{\columnsep}{0.45cm}
+
+% Ajustement des titres : suppression de \underbar (qui causait les bugs de dépassement) et ajout de couleur
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{\z@}%
+    {-0.7ex \@plus -.2ex \@minus -.1ex}%
+    {0.4ex \@plus .1ex}%
+    {\normalfont\small\bfseries\sffamily\color{secColor}}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+    {-0.5ex \@plus -.1ex \@minus -.1ex}%
+    {0.2ex \@plus .1ex}%
+    {\normalfont\footnotesize\bfseries\sffamily\color{subsecColor}}}
+\makeatother
+
+\begin{document}
+
+\begin{multicols*}{3}
+
+\section{Statistique Exploratoire}
+Soit un échantillon univarié ordonné : $y_{(1)} \le y_{(2)} \le \dots \le y_{(n)}$.
+
+\subsection{Tendance centrale}
+\textbullet{} \textbf{Moyenne empirique} : $\overline{y} = \frac{1}{n}\sum_{i=1}^{n}y_{i}$. Très sensible aux valeurs aberrantes.\\
+\textbullet{} \textbf{Médiane ($med(y)$)} : Indicateur robuste (résistant).
+$$\text{Si $n$ impair : } med(y) = y_{(\lceil n/2 \rceil)}$$
+$$\text{Si $n$ pair : } med(y) = \frac{1}{2}\left(y_{(n/2)} + y_{(n/2+1)}\right)$$
+\textbullet{} \textbf{Quantile d’ordre $p \in (0,1)$} : $\hat{q}(p) = y_{(\lceil np \rceil)}$.\\
+\textbullet{} \textbf{Quartiles} : Inférieur $\hat{q}(0.25) = y_{(\lceil n/4 \rceil)}$, Supérieur $\hat{q}(0.75) = y_{(\lceil 3n/4 \rceil)}$.
+
+\subsection{Dispersion \& Forme}
+\textbullet{} \textbf{Variance empirique ($s^2$)} : Division par $(n-1)$ pour corriger le biais. Formule de König-Huygens empirique associée :
+$$s^2 = \frac{1}{n-1}\sum_{j=1}^{n}(y_{j}-\overline{y})^{2}$$
+$$= \frac{1}{n-1}\left(\sum_{j=1}^{n}y_{j}^{2}-n\overline{y}^{2}\right)$$
+\textbullet{} \textbf{Écart-type empirique} : $s = \sqrt{s^2}$.\\
+\textbullet{} \textbf{Étendue (Range)} : $y_{(n)} - y_{(1)}$.\\
+\textbullet{} \textbf{Étendue interquartile} : $IQR(y) = \hat{q}(0.75) - \hat{q}(0.25)$.\\
+\textbullet{} \textbf{Boxplot} : Construit sur le \textit{five-number summary} ($y_{(1)}, \hat{q}(0.25), med, \hat{q}(0.75), y_{(n)}$). Seuil maximal des moustaches : $C = 1.5 \times IQR$. Les moustaches s'arrêtent aux valeurs réelles les plus extrêmes contenues dans $[\hat{q}(0.25) - C, \; \hat{q}(0.75) + C]$. Les points au-delà sont des valeurs aberrantes.
+
+\section{Théorie des Probabilités \& Théorèmes}
+
+\subsection{Propriétés des Espérances conditionnelles}
+\textbullet{} \textbf{Théorème de l'espérance totale} : Soit une partition de l'espace fondamental $A_1, A_2, \dots$
+$$\mathbb{E}(X) = \sum_{i} \mathbb{E}(X|A_i)\mathbb{P}(A_i)$$
+
+\subsection{Covariance \& Corrélation théoriques}
+\textbullet{} \textbf{Covariance} : Mesure de dépendance linéaire.
+$$cov(X,Y) = \mathbb{E}[\{X-\mathbb{E}(X)\}\{Y-\mathbb{E}(Y)\}] =$$
+$$\mathbb{E}(\textbf{XY}) - \mathbb{E}(\textbf{X})\mathbb{E}(\textbf{Y})$$
+\textit{Propriétés de la covariance} :
+\begin{enumerate}
+    \item $cov(X,Y) = cov(Y,X)$ et $cov(X,X) = var(X)$.
+    \item Bilinéarité : $cov(X+Y, Z+W) = cov(X,Z) + cov(Y,Z) + cov(X,W) + cov(Y,W)$.
+    \item Changement d'échelle : $cov(aX+b, cY+d) = ac \cdot cov(X,Y)$.
+    \item Variance d'une somme/différence : $var(X \pm Y) = var(X) + var(Y) \pm 2cov(X,Y)$.
+    \item Si $X, Y$ indépendantes $\implies cov(X,Y) = 0$ (la réciproque est fausse).
+\end{enumerate}
+\textbullet{} \textbf{Corrélation ($\rho_{X,Y}$)} : Dimensionnelle, normalisée par Cauchy-Schwarz.
+$$\rho_{X,Y} = \frac{cov(X,Y)}{\sqrt{var(X)var(Y)}} \quad \implies $$ 
+$$\quad -1 \le \rho_{X,Y} \le 1$$
+\textit{Propriétés de la corrélation} :
+\begin{enumerate}
+    \item $\rho(a+bX, c+dY) = \text{sign}(bd)\rho(X,Y)$.
+    \item $\rho(X,X) = 1$ et $\rho(X,-X) = -1$ (si $X$ non constante).
+    \item $\rho_{X,Y} = 0$ n'implique pas l'indépendance (relation non linéaire possible).
+\end{enumerate}
+\textbullet{} \textbf{Corrélation empirique} : Pour un échantillon de paires $(x_1, y_1), \dots, (x_n, y_n)$ :
+$$r = \frac{\sum_{j=1}^n (x_j - \overline{x})(y_j - \overline{y})}{\sqrt{\sum_{j=1}^n (x_j-\overline{x})^2 \sum_{j=1}^n (y_j-\overline{y})^2}}$$
+
+\subsection{Comportements Limites (LGN)}
+Soit $X_1, X_2, \dots$ une suite de variables i.i.d. d'espérance $\mu$.\\
+\textbullet{} \textbf{Loi faible des grands nombres} : Si $var(X_1) < \infty$, alors pour tout $\epsilon > 0$ :
+$$\mathbb{P}(|\overline{X}_n - \mu| \ge \epsilon) \to 0 \quad \text{quand } n \to \infty \quad$$
+Convergence en proba\\
+\textbullet{} \textbf{Loi forte des grands nombres} : Nécessite uniquement $\mathbb{E}(X_1) < \infty$ :
+$$\mathbb{P}\left(\lim_{n \to \infty} \overline{X}_n = \mu\right) = 1 \quad$$ Convergence quasi sûre \\
+
+\subsection{Théorème Central Limite (TCL) \& Delta}
+\textbullet{} \textbf{TCL} : Si $0 < \sigma^2 = var(X_i) < \infty$, alors la variable standardisée converge en loi :
+$$Z_n = \sqrt{n}\frac{\overline{X}_n - \mu}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}(0,1)$$ 
+$$\implies \overline{X}_n \overset{app}{\sim} \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right)$$
+\textbullet{} \textbf{Méthode Delta} : Soit $g$ une fonction continûment dérivable en $\mu$ telle que $g'(\mu) \neq 0$. Alors :
+$$\sqrt{n}\frac{g(\overline{X}_n) - g(\mu)}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}\left(0, [g'(\mu)]^2\right)$$
+$$\implies g(\overline{X}_n) \overset{app}{\sim} \mathcal{N}\left(g(\mu), \frac{[g'(\mu)]^2\sigma^2}{n}\right)$$
+
+\subsection{Quantiles théoriques}
+Pour une fonction de répartition $F$, le $p$-ième quantile est $x_p = \inf\{x : F(x) \ge p\}$. Si $F$ est continue et strictement croissante, $x_p = F^{-1}(p)$. La médiane théorique correspond à $x_{0.5}$.
+
+\section{Estimation Ponctuelle}
+Soit un échantillon $X_1, \dots, X_n \overset{iid}{\sim} f(x;\theta)$.
+
+\subsection{Méthode des Moments (MOM)}
+Égalisation des moments théoriques $m_k(\theta) = \mathbb{E}_\theta(X^k)$ et empiriques $\hat{m}_k = \frac{1}{n}\sum X_i^k$.
+
+\subsection{Maximum de Vraisemblance (ML)}
+Vraisemblance $L(\theta) = \prod_{i=1}^{n}f(x_{i};\theta)$, et log-vraisemblance $l(\theta) = \sum_{i=1}^{n}\log f(x_{i};\theta)$.\\
+L'estimateur $\hat{\theta}_{ML}$ vérifie l'équation de score $l'(\hat{\theta}_{ML}) = 0$ et la condition de concavité $l''(\hat{\theta}_{ML}) < 0$.
+
+\subsection{Propriétés \& Optimisation d'EQM}
+\textbullet{} \textbf{Biais} : $b_\theta(\hat{\theta}) = \mathbb{E}_\theta(\hat{\theta}) - \theta$.\\
+\textbullet{} \textbf{Erreur Quadratique Moyenne (EQM)} :
+$$EQM_\theta(\hat{\theta}) = \mathbb{E}_\theta\{(\hat{\theta}-\theta)^{2}\} = Var_\theta(\hat{\theta}) + [b_\theta(\hat{\theta})]^2$$
+\textbullet{} \textbf{Cas de l'estimateur de la variance sous $\mathcal{N}(\mu, \sigma^2)$} : \\
+Soit $\hat{\sigma}_n^2 = \frac{1}{n}\sum(X_i-\overline{X})^2$. On définit la famille d'estimateurs $\hat{\sigma}^a = a\hat{\sigma}_n^2$. Sachant que $\mathbb{E}(\hat{\sigma}_n^2) = \frac{n-1}{n}\sigma^2$ et $Var(n\hat{\sigma}_n^2) = 2\sigma^4(n-1)$ :
+\begin{itemize}
+    \itemsep=1pt \parskip=0pt \parsep=0pt
+    \item[\color{subsecColor}\textbullet] \textbf{Bias null} : $a = \frac{n}{n-1} \implies S_n^2 = \frac{1}{n-1}\sum(X_i-\overline{X})^2$
+    \item[\color{subsecColor}\textbullet] \textbf{Var nulle} : $a = 0 \implies \text{Var nulle, EQM maximal } (=\sigma^2)$
+    \item[\color{subsecColor}\textbullet] \textbf{Min l'EQM} : $a = \frac{n}{n+1} \implies \frac{1}{n+1}\sum(X_i-\overline{X})^2$
+\end{itemize}
+
+\subsection{Information de Fisher \& Asymptotique}
+\textbullet{} \textbf{Information de Fisher (un échantillon)} :
+$$I_1(\theta) = -\mathbb{E}_\theta\left[\frac{\partial^2}{\partial \theta^2} \log f(X_1;\theta)\right]$$ 
+$$\implies I_n(\theta) = n \cdot I_1(\theta) = -\mathbb{E}_\theta(l''(\theta))$$
+\textbullet{} \textbf{Information de Fisher observée} : $J_n(\hat{\theta}_{ML}) = -l''(\hat{\theta}_{ML})$.\\
+\textbullet{} \textbf{Variance Asymptotique }:$\frac{1}{J_n(\hat{\theta}_{ML})}$\\
+\textbullet{} \textbf{Propriété asymptotique} : Pour les modèles réguliers, quand $n \to \infty$ :
+$$\hat{\theta}_{ML} \overset{app}{\sim} \mathcal{N}\left(\theta, \; \frac{1}{I_n(\theta)}\right) \approx \mathcal{N}\left(\theta, \; \frac{1}{J_n(\hat{\theta}_{ML})}\right)$$
+\textit{Attention} : Échoue pour les modèles non réguliers où le support dépend du paramètre (ex: Uniforme $U(0,\theta)$).
+
+\subsection{Loi de Pareto (Queues Lourdes)}
+Densité $f(x) = \alpha x^{-1-\alpha}$ sur $[1, \infty)$ pour $\alpha > 0$.
+Moment d'ordre $r$ : $\mathbb{E}(X^r) = \frac{\alpha}{\alpha-r}$ si $r < \alpha$, et $\infty$ si $r \ge \alpha$.
+Ainsi, $\mathbb{E}(X) < \infty \iff \alpha > 1$ et $Var(X) < \infty \iff \alpha > 2$. Si les moments n'existent pas, le TCL et les propriétés standard des variances/corrélations s'effondrent.
+
+\section{Intervalles de Confiance (IC)}
+
+\subsection{Théorie des Pivots}
+$T(Y, \theta)$ est un \textbf{pivot} si sa loi exacte est connue et indépendante de $\theta$. On résout $\mathbb{P}_\theta(a \le T(Y,\theta) \le b) = 1-\alpha$ pour isoler $\theta$.
+
+\subsection{IC - Cas de la Loi Normale $\mathcal{N}(\mu, \sigma^2)$}
+\textbullet{} \textbf{Si $\sigma^2$ connue} : Pivot $Z_n = \sqrt{n}\frac{\overline{Y}_n - \mu}{\sigma} \sim \mathcal{N}(0,1)$.
+$$\text{IC bilatéral } (1-\alpha) : \left[ \overline{Y}_n \pm \frac{z_{1-\alpha/2}}{\sqrt{n}}\sigma \right]$$
+\textbullet{} \textbf{Si $\sigma^2$ inconnue} : Estimée par $S_n^2$. Pivot $T_n = \sqrt{n}\frac{\overline{Y}_n - \mu}{S_n} \sim t_{n-1}$.
+$$\text{IC bilatéral } (1-\alpha) : \left[ \overline{Y}_n \pm \frac{t_{n-1, 1-\alpha/2}}{\sqrt{n}}S_n \right]$$
+$$\text{IC unilatéral gauche} :$$
+$$\left[ \overline{Y}_n - \frac{t_{n-1, 1-\alpha}}{\sqrt{n}}S_n, \; +\infty \right[$$
+\textbullet{} \textbf{Propriété des quantiles} : La loi de Student ayant des queues plus lourdes, $|t_{n-1,\beta}| > |z_{\beta}|$ pour tout $\beta \neq 0.5$. Quand $n \to \infty$, $t_{n-1} \to \mathcal{N}(0,1)$.
+
+\subsection{Pivots Exacts Non Normaux}
+\textbullet{} \textbf{Cas Uniforme $U(0,\theta)$} : Soit $M_n = \max(Y_i)$. Le pivot est $T = \frac{M_n}{\theta}$.
+Fonction de répartition : $F_T(t) = \mathbb{P}_\theta(T \le t) = t^n$ pour $t \in (0,1)$.
+Pour un niveau $1-\alpha$, en choisissant l'intervalle symétrique en probabilité sur $T$ : $\mathbb{P}_\theta(\alpha^{1/n} \le T \le 1) = 1-\alpha$. En inversant :
+$$\text{IC exact } (1-\alpha) : \left[ M_n, \; \alpha^{-1/n}M_n \right]$$
+
+\subsection{IC Asymptotiques ($n \to \infty$)}
+\textbullet{} \textbf{Via l'EMV et l'Information observée} :
+$$\theta \in \left[ \hat{\theta}_{ML} \pm \frac{z_{1-\alpha/2}}{\sqrt{J_n(\hat{\theta}_{ML})}} \right]$$
+\textbullet{} \textbf{Via le TCL (Exemple de la loi Uniforme $U(0,\theta)$)} : \\
+$\mathbb{E}(Y) = \frac{\theta}{2}$, $Var(Y) = \frac{\theta^2}{12} \implies Z_n = \frac{\sqrt{n}(\overline{Y}_n - \theta/2)}{\sqrt{\theta^2/12}} \overset{app}{\sim} \mathcal{N}(0,1)$.
+En résolvant l'inéquation $|Z_n| \le z_{1-\alpha/2}$ par rapport à $\theta$, on obtient :
+$$\theta \in \left[ \frac{\overline{Y}_n}{\frac{1}{2} + \frac{z_{1-\alpha/2}}{\sqrt{12n}}}, \; \frac{\overline{Y}_n}{\frac{1}{2} - \frac{z_{1-\alpha/2}}{\sqrt{12n}}} \right]$$
+
+\section{Régression Linéaire Simple}
+Modèle : $y_j = a + \beta x_j + \epsilon_j$ avec $\epsilon_j \overset{iid}{\sim} \mathcal{N}(0, \sigma^2)$ et $x_j$ fixés non tous égaux.
+
+\subsection{Optimisation \& Moindres Carrés (MCO)}
+Minimisation de la somme des carrés résiduels $S(a,\beta) = \sum \{y_j - (a+\beta x_j)\}^2$.
+Matrice Hessienne globale du système :
+$$H = \begin{pmatrix} 2n & 2n\overline{x}_n \\ 2n\overline{x}_n & 2\sum x_i^2 \end{pmatrix}$$
+$\det(H) = 4n\sum(x_i-\overline{x}_n)^2 > 0 \implies$ Minimum global unique concave.
+$$\hat{\beta}_{n} = \frac{\sum_{j=1}^{n}(x_{j}-\overline{x}_{n})y_{j}}{\sum_{j=1}^{n}(x_{j}-\overline{x}_{n})^{2}} = \frac{\sum x_j y_j - n\overline{x}_n\overline{y}_n}{\sum x_j^2 - n\overline{x}_n^2}$$
+$$\hat{a}_{n} = \overline{y}_{n} - \hat{\beta}_{n}\overline{x}_{n} \implies \text{passe par } (\overline{x}_n, \overline{y}_n)$$
+
+\subsection{Propriétés des Résidus}
+Résidus définis par $r_j = y_j - \hat{y}_j = y_j - (\hat{a}_n + \hat{\beta}_n x_j)$.
+$$\sum_{j=1}^n r_j = 0, \quad \sum_{j=1}^n x_j r_j = 0, \quad \sum_{j=1}^n \hat{y}_j r_j = 0$$
+
+\subsection{Analyse de la Variance (ANOVA)}
+Décomposition de la somme des carrés totale :
+$$\sum_{j=1}^n (y_j - \overline{y}_n)^2 = \sum_{j=1}^n (\hat{y}_j - \overline{y}_n)^2 + \sum_{j=1}^n r_j^2$$ 
+$$\implies SC_{\text{Total}} = SC_R + SC_E$$
+\textbullet{} \textbf{Coefficient de détermination $R^2$} : Proportion de variance expliquée.
+$$R^2 = \frac{SC_R}{SC_{\text{Total}}} = 1 - \frac{SC_E}{SC_{\text{Total}}}$$
+\textbullet{} \textbf{$R^2$ Ajusté} : Corrige l'inflation artificielle due au nombre de variables.
+$$R^2_{\text{adj}} = 1 - \frac{SC_E / (n-2)}{SC_{\text{Total}} / (n-1)}$$
+\textbullet{} \textbf{Estimation sans biais du bruit $\sigma^2$} : $S_n^2 = \frac{SC_E}{n-2} = \frac{1}{n-2}\sum_{j=1}^n r_j^2$.
+
+\subsection{Inférence Statistique sur la Pente $\beta$}
+\textbullet{} \textbf{Distribution exacte} : $\hat{\beta}_n \sim \mathcal{N}\left(\beta, \; \sigma^2 / \sum(x_i-\overline{x}_n)^2\right)$.\\
+\textbullet{} \textbf{Erreur-type de la pente} : $\hat{sd}(\hat{\beta}_n) = S_n / \sqrt{\sum (x_i - \overline{x}_n)^2}$.\\
+\textbullet{} \textbf{Pivot associé} : $\frac{\hat{\beta}_n - \beta}{\hat{sd}(\hat{\beta}_n)} \sim t_{n-2}$.\\
+\textbullet{} \textbf{IC bilatéral} $(1-\alpha)$ : $\left[ \hat{\beta}_n \pm t_{n-2, \; 1-\alpha/2} \times \hat{sd}(\hat{\beta}_n) \right]$.\\
+\textbullet{} \textbf{Test d'hypothèse} $H_0 : \beta = \beta_0$ vs $H_1 : \beta \neq \beta_0$ :
+Statistique $t_{\text{obs}} = \frac{\hat{\beta}_n - \beta_0}{\hat{sd}(\hat{\beta}_n)}$. On rejette $H_0 \iff |t_{\text{obs}}| > t_{n-2, \; 1-\alpha/2}$.
+
+\subsection{Imputation \& Prédiction}
+Pour une nouvelle valeur $x_+$, la prévision de la réponse est $\hat{y}_{+} = \hat{a}_n + \hat{\beta}_n x_+$.
+
+\subsection{Lien avec le Maximum de Vraisemblance}
+La log-vraisemblance globale du modèle gaussien s'écrit :
+$$l(a,\beta,\sigma^2)=$$ 
+$$ -\frac{n}{2}\log\sigma^2 - \frac{1}{2\sigma^2}\sum_{j=1}^n \{y_j-(a+\beta x_j)\}^2 - \frac{n}{2}\log(2\pi)$$
+Maximiser $l$ donne les mêmes estimateurs $\hat{a}_{ML} = \hat{a}_{MCO}$ et $\hat{\beta}_{ML} = \hat{\beta}_{MCO}$. Cependant, l'estimateur ML de la variance est biaisé : $\hat{\sigma}^2_{ML} = \frac{1}{n}\sum r_j^2 = \frac{n-2}{n}S_n^2$.
+
+\section{Distributions, Moments \& Estimations}
+
+\scalebox{.8}{
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Loi} & \textbf{Support} & $f(x)$ ou $\mathbb{P}(X=x)$ & $\mathbb{E}(X)$ & $Var(X)$ \\ \midrule
+$\mathbf{U(0,\theta)}$ & $[0,\theta]$ & $\frac{1}{\theta}$ & $\frac{\theta}{2}$ & $\frac{\theta^2}{12}$ \\ \addlinespace
+$\mathbf{\exp(\lambda)}$ & $[0,+\infty[$ & $\lambda e^{-\lambda x}$ & $\frac{1}{\lambda}$ & $\frac{1}{\lambda^2}$ \\ \addlinespace
+$\mathbf{\text{Poiss}(\lambda)}$ & $\mathbb{N}$ & $\frac{\lambda^x}{x!}e^{-\lambda}$ & $\lambda$ & $\lambda$ \\ \addlinespace
+$\mathbf{\mathcal{B}(m,p)}$ & $\{0,\dots,m\}$ & $\binom{m}{x}p^x(1-p)^{m-x}$ & $mp$ & $mp(1-p)$ \\ \addlinespace
+$\mathbf{\mathcal{N}(\mu,\sigma^2)}$ & $\mathbb{R}$ & $\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ & $\mu$ & $\sigma^2$ \\ \bottomrule
+\end{tabular}
+}
+
+\subsection{Résultats d'Estimation \& Fisher par Loi}
+\textbullet{} \textbf{Uniforme $U(0,\theta)$} : $\hat{\theta}_{MOM} = 2\overline{X}_n$, $\hat{\theta}_{ML} = M_n = \max(X_i)$. Modèle non régulier (pas d'information de Fisher standard via dérivée).\\
+\textbullet{} \textbf{Exponentielle $\exp(\lambda)$} : $\hat{\lambda}_{ML} = 1/\overline{X}_n$. Score $l'(\lambda) = \frac{n}{\lambda} - n\overline{X}_n$, $l''(\lambda) = -n/\lambda^2$. Information théorique $I_1(\lambda) = 1/\lambda^2 \implies I_n(\lambda) = n/\lambda^2$. Information observée $J_n(\hat{\lambda}_{ML}) = n\overline{X}_n^2$.\\
+\textbullet{} \textbf{Poisson $\text{Poiss}(\lambda)$} : $\hat{\lambda}_{ML} = \overline{X}_n$. Score $l'(\lambda) = \frac{n\overline{X}_n}{\lambda} - n$, $l''(\lambda) = -\frac{n\overline{X}_n}{\lambda^2}$. Information théorique $I_1(\lambda) = 1/\lambda \implies I_n(\lambda) = n/\lambda$. Information observée $J_n(\hat{\lambda}_{ML}) = n/\overline{X}_n$.\\
+\textbullet{} \textbf{Binomiale $\mathcal{B}(m,p)$} ($m$ connu) : $\hat{p}_{ML} = \overline{X}_n / m$. Log-vraisemblance : $l(p) = n\overline{X}_n \log p + (nm - n\overline{X}_n)\log(1-p) + cst$. Dérivée seconde : $l''(p) = -\frac{n\overline{X}_n}{p^2} - \frac{nm - n\overline{X}_n}{(1-p)^2}$. Information théorique $I_1(p) = \frac{m}{p(1-p)} \implies I_n(p) = \frac{nm}{p(1-p)}$.\\
+\textbullet{} \textbf{Normale $\mathcal{N}(\mu,\sigma^2)$} : $\hat{\mu}_{ML} = \overline{X}_n$, $\hat{\sigma}^2_{ML} = \hat{\sigma}_n^2$. Information pour $\mu$ (si $\sigma^2$ connu) : $I_n(\mu) = n/\sigma^2$.
+
+\subsection{Loi Normale Standard $\mathcal{N}(0,1)$}
+\textbullet{} Densité $\phi(z) = \frac{1}{\sqrt{2\pi}}e^{-z^2/2}$, symétrique autour de 0. Fonction de répartition : $\Phi(z) = \int_{-\infty}^z \phi(x)dx$.\\
+\textbullet{} Propriétés cruciales des quantiles : $\Phi(-z) = 1 - \Phi(z)$. $\mathbb{P}(z_1 \le Z \le z_2) = \Phi(z_2) - \Phi(z_1)$.\\
+\textbullet{} Seuils empiriques : $\mathbb{P}(|Z| \le 1) \approx 68.3\%$, $\mathbb{P}(|Z| \le 1.96) = 95\%$, $\mathbb{P}(|Z| \le 2.58) = 99\%$.
+
+\subsection{Tests Khi-deux ($\chi^2$)}
+\textbf{Adéquation} : $k$ classes, $o_i$ obs, $e_i$ théo ($\sum o_i = \sum e_i = n$, $e_i \ge 5$).
+$$T_n = \sum_{i=1}^{k} \frac{(o_i - e_i)^2}{e_i} \xrightarrow{app} \chi^2_\nu$$
+$\nu = k - 1$ (sans estimation) \quad $\nu = k - 1 - c$ ($c$ param. estimés).
+Rejet $H_0 \iff t_{\text{obs}} > \chi^2_{\nu, \; 1-\alpha}$ \quad $p_{\text{obs}} = \mathbb{P}(T \ge t_{\text{obs}})$.
+
+\textbf{Indépendance (Contingence)} : Caractères $A$ ($h$ classes), $B$ ($k$ classes).
+$$e_{ij} = \frac{n_{i\cdot} n_{\cdot j}}{n} \implies t_{\text{obs}} = \sum_{i=1}^{h} \sum_{j=1}^{k} \frac{(n_{ij} - e_{ij})^2}{e_{ij}}$$
+$\nu = (h-1)(k-1)$ \quad Rejet $\iff t_{\text{obs}} > \chi^2_{(h-1)(k-1), \; 1-\alpha}$.
+
+\end{multicols*}
+
+
+\end{document}
