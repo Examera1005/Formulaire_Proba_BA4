@@ -57,10 +57,15 @@ $$= \frac{1}{n-1}\left(\sum_{j=1}^{n}y_{j}^{2}-n\overline{y}^{2}\right)$$
 
 \section{Théorie des Probabilités \& Théorèmes}
 
+\subsection{Théorème de Bayes}
+$$\mathbb{P}(A_i | B) = \frac{\mathbb{P}(B | A_i)\mathbb{P}(A_i)}{\sum_{j=1}^k \mathbb{P}(B | A_j)\mathbb{P}(A_j)}$$
+\textbullet{} \textbf{Forme simple} : $\mathbb{P}(A|B) = \frac{\mathbb{P}(B|A)\mathbb{P}(A)}{\mathbb{P}(B)}$ \quad ($\mathbb{P}(B) = \mathbb{P}(B|A)\mathbb{P}(A) + \mathbb{P}(B|A^c)\mathbb{P}(A^c)$).
+
+
 \subsection{Propriétés des Espérances conditionnelles}
 \textbullet{} \textbf{Théorème de l'espérance totale} : Soit une partition de l'espace fondamental $A_1, A_2, \dots$
-$$\mathbb{E}(X) = \sum_{i} \mathbb{E}(X|A_i)\mathbb{P}(A_i)$$
-
+$$\mathbb{E}(X) = \sum_{i} \mathbb{E}(X|A_i)\mathbb{P}(A_i) = \sum_{i} x_i \mathbb{P}(X = x_i)$$
+$$\mathbb{E}(X) = \int_{-\infty}^{+\infty} x f_X(x) \, dx$$
 \subsection{Covariance \& Corrélation théoriques}
 \textbullet{} \textbf{Covariance} : Mesure de dépendance linéaire.
 $$cov(X,Y) = \mathbb{E}[\{X-\mathbb{E}(X)\}\{Y-\mathbb{E}(Y)\}] =$$
@@ -206,15 +211,9 @@ Statistique $t_{\text{obs}} = \frac{\hat{\beta}_n - \beta_0}{\hat{sd}(\hat{\beta
 \subsection{Imputation \& Prédiction}
 Pour une nouvelle valeur $x_+$, la prévision de la réponse est $\hat{y}_{+} = \hat{a}_n + \hat{\beta}_n x_+$.
 
-\subsection{Lien avec le Maximum de Vraisemblance}
-La log-vraisemblance globale du modèle gaussien s'écrit :
-$$l(a,\beta,\sigma^2)=$$ 
-$$ -\frac{n}{2}\log\sigma^2 - \frac{1}{2\sigma^2}\sum_{j=1}^n \{y_j-(a+\beta x_j)\}^2 - \frac{n}{2}\log(2\pi)$$
-Maximiser $l$ donne les mêmes estimateurs $\hat{a}_{ML} = \hat{a}_{MCO}$ et $\hat{\beta}_{ML} = \hat{\beta}_{MCO}$. Cependant, l'estimateur ML de la variance est biaisé : $\hat{\sigma}^2_{ML} = \frac{1}{n}\sum r_j^2 = \frac{n-2}{n}S_n^2$.
-
 \section{Distributions, Moments \& Estimations}
 
-\scalebox{.875}{
+\scalebox{.67}{
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 \textbf{Loi} & \textbf{Support} & $f(x)$ ou $\mathbb{P}(X=x)$ & $\mathbb{E}(X)$ & $Var(X)$ \\ \midrule
@@ -250,6 +249,9 @@ $\nu = (h-1)(k-1)$ \quad Rejet $\iff t_{\text{obs}} > \chi^2_{(h-1)(k-1), \; 1-\
 
 \textbf{Markov} : Soit $X$ une variable aléatoire positive ($X \ge 0$) et $a > 0$ :
 $$\mathbb{P}(X \ge a) \le \frac{\mathbb{E}(X)}{a}$$
+
+
+
 
 \end{multicols*}
 
