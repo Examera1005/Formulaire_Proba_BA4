@@ -36,20 +36,19 @@
 \begin{multicols*}{3}
 
 \section{Statistique Exploratoire}
-Soit un échantillon univarié ordonné : $y_{(1)} \le y_{(2)} \le \dots \le y_{(n)}$.
 
 \subsection{Tendance centrale}
-\textbullet{} \textbf{Moyenne empirique} : $\overline{y} = \frac{1}{n}\sum_{i=1}^{n}y_{i}$. Très sensible aux valeurs aberrantes.\\
-\textbullet{} \textbf{Médiane ($med(y)$)} : Indicateur robuste (résistant).
-$$\text{Si $n$ impair : } med(y) = y_{(\lceil n/2 \rceil)}$$
-$$\text{Si $n$ pair : } med(y) = \frac{1}{2}\left(y_{(n/2)} + y_{(n/2+1)}\right)$$
+\textbullet{} \textbf{Moyenne } : $\overline{y} = \frac{1}{n}\sum_{i=1}^{n}y_{i}$\\
+\textbullet{} \textbf{Médiane ($med(y)$)}\\
+$\text{Si $n$ impair : } med(y) = y_{(\lceil n/2 \rceil)}$ \\
+$\text{Si $n$ pair : } med(y) = \frac{1}{2}\left(y_{(n/2)} + y_{(n/2+1)}\right)$\\
 \textbullet{} \textbf{Quantile d’ordre $p \in (0,1)$} : $\hat{q}(p) = y_{(\lceil np \rceil)}$.\\
 \textbullet{} \textbf{Quartiles} : Inférieur $\hat{q}(0.25) = y_{(\lceil n/4 \rceil)}$, Supérieur $\hat{q}(0.75) = y_{(\lceil 3n/4 \rceil)}$.
 
 \subsection{Dispersion \& Forme}
-\textbullet{} \textbf{Variance empirique ($s^2$)} : Division par $(n-1)$ pour corriger le biais. Formule de König-Huygens empirique associée :
-$$s^2 = \frac{1}{n-1}\sum_{j=1}^{n}(y_{j}-\overline{y})^{2}$$
-$$= \frac{1}{n-1}\left(\sum_{j=1}^{n}y_{j}^{2}-n\overline{y}^{2}\right)$$
+\textbullet{} \textbf{Variance empirique ($s^2$)} :\\
+$s^2 = \frac{1}{n-1}\sum_{j=1}^{n}(y_{j}-\overline{y})^{2}$\\
+$= \frac{1}{n-1}\left(\sum_{j=1}^{n}y_{j}^{2}-n\overline{y}^{2}\right)$\\
 \textbullet{} \textbf{Écart-type empirique} : $s = \sqrt{s^2}$.\\
 \textbullet{} \textbf{Étendue (Range)} : $y_{(n)} - y_{(1)}$.\\
 \textbullet{} \textbf{Étendue interquartile} : $IQR(y) = \hat{q}(0.75) - \hat{q}(0.25)$.\\
@@ -58,35 +57,42 @@ $$= \frac{1}{n-1}\left(\sum_{j=1}^{n}y_{j}^{2}-n\overline{y}^{2}\right)$$
 \section{Théorie des Probabilités \& Théorèmes}
 
 \subsection{Théorème de Bayes}
-$$\mathbb{P}(A_i | B) = \frac{\mathbb{P}(B | A_i)\mathbb{P}(A_i)}{\sum_{j=1}^k \mathbb{P}(B | A_j)\mathbb{P}(A_j)}$$
+$\mathbb{P}(A_i | B) = \frac{\mathbb{P}(B | A_i)\mathbb{P}(A_i)}{\sum_{j=1}^k \mathbb{P}(B | A_j)\mathbb{P}(A_j)}$\\
 \textbullet{} \textbf{Forme simple} : $\mathbb{P}(A|B) = \frac{\mathbb{P}(B|A)\mathbb{P}(A)}{\mathbb{P}(B)}$ \quad ($\mathbb{P}(B) = \mathbb{P}(B|A)\mathbb{P}(A) + \mathbb{P}(B|A^c)\mathbb{P}(A^c)$).
 
 
-\subsection{Propriétés des Espérances conditionnelles}
-\textbullet{} \textbf{Théorème de l'espérance totale} : Soit une partition de l'espace fondamental $A_1, A_2, \dots$
-$$\mathbb{E}(X) = \sum_{i} \mathbb{E}(X|A_i)\mathbb{P}(A_i) = \sum_{i} x_i \mathbb{P}(X = x_i)$$
-$$\mathbb{E}(X) = \int_{-\infty}^{+\infty} x f_X(x) \, dx$$
+\subsection{Espérance ,Variance}
+$\mathbb{E}(X) = \sum_{i} \mathbb{E}(X|A_i)\mathbb{P}(A_i)$\\
+$\mathbb{E}(X)= \sum_{i} x_i \mathbb{P}(X = x_i)$\\
+$\mathbb{E}(X) = \int_{-\infty}^{+\infty} x f_X(x) \, dx$\\
+$Var(X) = \mathbb{E}(X^2) - \mathbb{E}(X)^2$\\
+
+\textbullet{} \textbf{Cas univarié ($X$)} :\\
+$Var(X) = \sum_{i} (x_i - \mathbb{E}(X))^2 \mathbb{P}(X = x_i)$
+$Var(X) = \int_{-\infty}^{+\infty} (x - \mathbb{E}(X))^2 f_X(x) \, dx$
+
+\textbullet{} \textbf{Propriétés fondamentales} :\\
+$Var(aX + b) = a^2 Var(X)$\\
+$Var(X \pm Y) = Var(X) + Var(Y) \pm 2 \, cov(X,Y)$\\
+Si $X, Y$ indépendantes : $Var(X \pm Y) = Var(X) + Var(Y)$\\
 \subsection{Covariance \& Corrélation théoriques}
-\textbullet{} \textbf{Covariance} : Mesure de dépendance linéaire.
-$$cov(X,Y) = \mathbb{E}[\{X-\mathbb{E}(X)\}\{Y-\mathbb{E}(Y)\}] =$$
-$$\mathbb{E}(\textbf{XY}) - \mathbb{E}(\textbf{X})\mathbb{E}(\textbf{Y})$$
-\textit{Propriétés de la covariance} :
-\begin{enumerate}
-    \item $cov(X,Y) = cov(Y,X)$ et $cov(X,X) = var(X)$.
-    \item Bilinéarité : $cov(X+Y, Z+W) = cov(X,Z) + cov(Y,Z) + cov(X,W) + cov(Y,W)$.
-    \item Changement d'échelle : $cov(aX+b, cY+d) = ac \cdot cov(X,Y)$.
-    \item Variance d'une somme/différence : $var(X \pm Y) = var(X) + var(Y) \pm 2cov(X,Y)$.
-    \item Si $X, Y$ indépendantes $\implies cov(X,Y) = 0$ (la réciproque est fausse).
-\end{enumerate}
+\textbullet{} \textbf{Covariance} : Mesure de dépendance linéaire.\\
+$cov(X,Y) = \mathbb{E}[\{X-\mathbb{E}(X)\}\{Y-\mathbb{E}(Y)\}] =$\\
+$\mathbb{E}(\textbf{XY}) - \mathbb{E}(\textbf{X})\mathbb{E}(\textbf{Y})$\\
+\textbf{Propriétés de la covariance} :
+     $cov(X,Y) = cov(Y,X)$\\
+     $cov(X,X) = var(X)$.\\
+     $cov(X+Y, Z+W) = cov(X,Z) + cov(Y,Z) + cov(X,W) + cov(Y,W)$.\\
+     $cov(aX+b, cY+d) = ac \cdot cov(X,Y)$.\\
+     $var(X \pm Y) = var(X) + var(Y) \pm 2cov(X,Y)$.\\
+     Si $X, Y$ indépendantes $cov(X,Y) = 0$ (la réciproque est fausse).\\
 \textbullet{} \textbf{Corrélation ($\rho_{X,Y}$)} : Dimensionnelle, normalisée par Cauchy-Schwarz.
-$$\rho_{X,Y} = \frac{cov(X,Y)}{\sqrt{var(X)var(Y)}} \quad \implies $$ 
-$$\quad -1 \le \rho_{X,Y} \le 1$$
-\textit{Propriétés de la corrélation} :
-\begin{enumerate}
-    \item $\rho(a+bX, c+dY) = \text{sign}(bd)\rho(X,Y)$.
-    \item $\rho(X,X) = 1$ et $\rho(X,-X) = -1$ (si $X$ non constante).
-    \item $\rho_{X,Y} = 0$ n'implique pas l'indépendance (relation non linéaire possible).
-\end{enumerate}
+$\rho_{X,Y} = \frac{cov(X,Y)}{\sqrt{var(X)var(Y)}} \quad \implies $\\ 
+$\quad -1 \le \rho_{X,Y} \le 1$\\
+\textbf{Propriétés de la corrélation} :\\
+     $\rho(a+bX, c+dY) = \text{sign}(bd)\rho(X,Y)$.\\
+     $\rho(X,X) = 1$ et $\rho(X,-X) = -1$ (si $X$ non constante).\\
+     $\rho_{X,Y} = 0$ n'implique pas l'indépendance (relation non linéaire possible).\\
 \textbullet{} \textbf{Corrélation empirique} : Pour un échantillon de paires $(x_1, y_1), \dots, (x_n, y_n)$ :
 $$r = \frac{\sum_{j=1}^n (x_j - \overline{x})(y_j - \overline{y})}{\sqrt{\sum_{j=1}^n (x_j-\overline{x})^2 \sum_{j=1}^n (y_j-\overline{y})^2}}$$
 
@@ -95,9 +101,8 @@ Soit $X_1, X_2, \dots$ une suite de variables i.i.d. d'espérance $\mu$.\\
 \textbullet{} \textbf{Loi faible des grands nombres} : Si $var(X_1) < \infty$, alors pour tout $\epsilon > 0$ :
 $$\mathbb{P}(|\overline{X}_n - \mu| \ge \epsilon) \to 0 \quad \text{quand } n \to \infty \quad$$
 Convergence en proba\\
-\textbullet{} \textbf{Loi forte des grands nombres} : Nécessite uniquement $\mathbb{E}(X_1) < \infty$ :
+\textbullet{} \textbf{Loi forte des grands nombres} : Nécessite uniquement $\mathbb{E}(X_1) < \infty$ :\\
 $$\mathbb{P}\left(\lim_{n \to \infty} \overline{X}_n = \mu\right) = 1 \quad$$ Convergence quasi sûre \\
-
 \subsection{Théorème Central Limite (TCL) \& Delta}
 \textbullet{} \textbf{TCL} : Si $0 < \sigma^2 = var(X_i) < \infty$, alors la variable standardisée converge en loi :
 $$Z_n = \sqrt{n}\frac{\overline{X}_n - \mu}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}(0,1)$$ 
@@ -116,13 +121,14 @@ Soit un échantillon $X_1, \dots, X_n \overset{iid}{\sim} f(x;\theta)$.
 Égalisation des moments théoriques $m_k(\theta) = \mathbb{E}_\theta(X^k)$ et empiriques $\hat{m}_k = \frac{1}{n}\sum X_i^k$.
 
 \subsection{Maximum de Vraisemblance (ML)}
-Vraisemblance $L(\theta) = \prod_{i=1}^{n}f(x_{i};\theta)$, et log-vraisemblance $l(\theta) = \sum_{i=1}^{n}\log f(x_{i};\theta)$.\\
+Vraisemblance $L(\theta) = \prod_{i=1}^{n}f(x_{i};\theta)$\\
+log-vraisemblance $l(\theta) = \sum_{i=1}^{n}\log f(x_{i};\theta)$.\\
 L'estimateur $\hat{\theta}_{ML}$ vérifie l'équation de score $l'(\hat{\theta}_{ML}) = 0$ et la condition de concavité $l''(\hat{\theta}_{ML}) < 0$.
 
 \subsection{Propriétés \& Optimisation d'EQM}
 \textbullet{} \textbf{Biais} : $b_\theta(\hat{\theta}) = \mathbb{E}_\theta(\hat{\theta}) - \theta$.\\
-\textbullet{} \textbf{Erreur Quadratique Moyenne (EQM)} :
-$$EQM_\theta(\hat{\theta}) = \mathbb{E}_\theta\{(\hat{\theta}-\theta)^{2}\} = Var_\theta(\hat{\theta}) + [b_\theta(\hat{\theta})]^2$$
+\textbullet{} \textbf{Erreur Quadratique Moyenne} :\\
+$EQM_\theta(\hat{\theta}) = Var_\theta(\hat{\theta}) + [b_\theta(\hat{\theta})]^2$\\
 \textbullet{} \textbf{Cas de l'estimateur de la variance sous $\mathcal{N}(\mu, \sigma^2)$} : \\
 Soit $\hat{\sigma}_n^2 = \frac{1}{n}\sum(X_i-\overline{X})^2$. On définit la famille d'estimateurs $\hat{\sigma}^a = a\hat{\sigma}_n^2$. Sachant que $\mathbb{E}(\hat{\sigma}_n^2) = \frac{n-1}{n}\sigma^2$ et $Var(n\hat{\sigma}_n^2) = 2\sigma^4(n-1)$ :
 \begin{itemize}
@@ -153,12 +159,12 @@ Ainsi, $\mathbb{E}(X) < \infty \iff \alpha > 1$ et $Var(X) < \infty \iff \alpha 
 $T(Y, \theta)$ est un \textbf{pivot} si sa loi exacte est connue et indépendante de $\theta$. On résout $\mathbb{P}_\theta(a \le T(Y,\theta) \le b) = 1-\alpha$ pour isoler $\theta$.
 
 \subsection{IC - Cas de la Loi Normale $\mathcal{N}(\mu, \sigma^2)$}
-\textbullet{} \textbf{Si $\sigma^2$ connue} : Pivot $Z_n = \sqrt{n}\frac{\overline{Y}_n - \mu}{\sigma} \sim \mathcal{N}(0,1)$.
-$$\text{IC bilatéral } (1-\alpha) : \left[ \overline{Y}_n \pm \frac{z_{1-\alpha/2}}{\sqrt{n}}\sigma \right]$$
+\textbullet{} \textbf{Si $\sigma^2$ connue} :\\ Pivot $Z_n = \sqrt{n}\frac{\overline{Y}_n - \mu}{\sigma} \sim \mathcal{N}(0,1)$.\\
+$\text{IC bilatéral } (1-\alpha) : \left[ \overline{Y}_n \pm \frac{z_{1-\alpha/2}}{\sqrt{n}}\sigma \right]$\\
 \textbullet{} \textbf{Si $\sigma^2$ inconnue} : Estimée par $S_n^2$. Pivot $T_n = \sqrt{n}\frac{\overline{Y}_n - \mu}{S_n} \sim t_{n-1}$.
-$$\text{IC bilatéral } (1-\alpha) : \left[ \overline{Y}_n \pm \frac{t_{n-1, 1-\alpha/2}}{\sqrt{n}}S_n \right]$$
-$$\text{IC unilatéral gauche} :$$
-$$\left[ \overline{Y}_n - \frac{t_{n-1, 1-\alpha}}{\sqrt{n}}S_n, \; +\infty \right[$$
+$\text{IC bilatéral } (1-\alpha) : \left[ \overline{Y}_n \pm \frac{t_{n-1, 1-\alpha/2}}{\sqrt{n}}S_n \right]$\\
+$\text{IC unilatéral gauche:}$
+$\left[ \overline{Y}_n - \frac{t_{n-1, 1-\alpha}}{\sqrt{n}}S_n, \; +\infty \right[$\\
 \textbullet{} \textbf{Propriété des quantiles} : La loi de Student ayant des queues plus lourdes, $|t_{n-1,\beta}| > |z_{\beta}|$ pour tout $\beta \neq 0.5$. Quand $n \to \infty$, $t_{n-1} \to \mathcal{N}(0,1)$.
 
 \subsection{Pivots Exacts Non Normaux}
@@ -246,7 +252,7 @@ Rejet $H_0 \iff t_{\text{obs}} > \chi^2_{\nu, \; 1-\alpha}$ \quad $p_{\text{obs}
 \textbf{Indépendance (Contingence)} : Caractères $A$ ($h$ classes), $B$ ($k$ classes).
 $$e_{ij} = \frac{n_{i\cdot} n_{\cdot j}}{n} \implies t_{\text{obs}} = \sum_{i=1}^{h} \sum_{j=1}^{k} \frac{(n_{ij} - e_{ij})^2}{e_{ij}}$$
 $\nu = (h-1)(k-1)$ \quad Rejet $\iff t_{\text{obs}} > \chi^2_{(h-1)(k-1), \; 1-\alpha}$.
-
+\section{Inégalitées}
 \textbf{Markov} : Soit $X$ une variable aléatoire positive ($X \ge 0$) et $a > 0$ :
 $$\mathbb{P}(X \ge a) \le \frac{\mathbb{E}(X)}{a}$$
 
