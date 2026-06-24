@@ -1,0 +1,194 @@
+\documentclass[9pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{geometry}
+\geometry{margin=0.6cm,top=0.6cm,bottom=0.6cm}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{centernot}
+\definecolor{secColor}{RGB}{16, 44, 87}
+\definecolor{subsecColor}{RGB}{0, 95, 115}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.5pt}
+\setlength{\columnsep}{0.45cm}
+
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{\z@}%
+    {-0.5ex \@plus -.1ex \@minus -.1ex}%
+    {0.3ex \@plus .1ex}%
+    {\normalfont\small\bfseries\sffamily\color{secColor}}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+    {-0.4ex \@plus -.1ex \@minus -.1ex}%
+    {0.1ex \@plus .1ex}%
+    {\normalfont\footnotesize\bfseries\sffamily\color{subsecColor}}}
+\makeatother
+
+\begin{document}
+
+\begin{multicols*}{3}
+
+\section{Statistique Exploratoire}
+$y_{(1)} \le y_{(2)} \le \dots \le y_{(n)}$.
+
+\subsection{Tendance centrale}
+\textbullet{} \textbf{Moyenne} : $\overline{y} = \frac{1}{n}\sum y_{i}$ (sensible outliers).\\
+\textbullet{} \textbf{Médiane ($med(y)$)} : Robuste.\\
+$\text{Si $n$ impair : } y_{(\lceil n/2 \rceil)}$; $\text{Si $n$ pair : } \frac{1}{2}(y_{(n/2)} + y_{(n/2+1)})$.\\
+\textbullet{} \textbf{Quantile $p \in (0,1)$} : $\hat{q}(p) = y_{(\lceil np \rceil)}$.\\
+\textbullet{} \textbf{Quartiles} : $\hat{q}(0.25) = y_{(\lceil n/4 \rceil)}$, $\hat{q}(0.75) = y_{(\lceil 3n/4 \rceil)}$.
+
+\subsection{Dispersion \& Forme}
+\textbullet{} \textbf{Variance ($s^2$)} : Div. par $n-1$ (sans biais). König-Huygens :
+$$s^2 = \frac{1}{n-1}\sum_{j=1}^{n}(y_{j}-\overline{y})^{2} = \frac{1}{n-1}\left(\sum_{j=1}^{n}y_{j}^{2}-n\overline{y}^{2}\right)$$
+\textbullet{} \textbf{Écart-type} : $s = \sqrt{s^2}$. \quad \textbullet{} \textbf{Étendue} : $y_{(n)} - y_{(1)}$.\\
+\textbullet{} \textbf{Étendue interquartile} : $IQR = \hat{q}(0.75) - \hat{q}(0.25)$.\\
+\textbullet{} \textbf{Boxplot} : Moustaches max $C = 1.5 \times IQR$. Bornes $[\hat{q}(0.25) - C, \; \hat{q}(0.75) + C]$. Points au-delà = outliers.
+
+\section{Théorie des Probabilités \& Théorèmes}
+
+\subsection{Théorème de Bayes}
+$$\mathbb{P}(A_i | B) = \frac{\mathbb{P}(B | A_i)\mathbb{P}(A_i)}{\sum_{j=1}^k \mathbb{P}(B | A_j)\mathbb{P}(A_j)}$$
+\textbullet{} $\mathbb{P}(A|B) = \frac{\mathbb{P}(B|A)\mathbb{P}(A)}{\mathbb{P}(B)}$ avec $\mathbb{P}(B) = \mathbb{P}(B|A)\mathbb{P}(A) + \mathbb{P}(B|A^c)\mathbb{P}(A^c)$.
+
+\subsection{Espérance conditionnelle \& Totale}
+\textbullet{} \textbf{Espérance totale} (partition $A_i$) :
+$$\mathbb{E}(X) = \sum_{i} \mathbb{E}(X|A_i)\mathbb{P}(A_i) = \sum_{i} x_i \mathbb{P}(X = x_i) = \int_{-\infty}^{+\infty} x f_X(x) \, dx$$
+
+\subsection{Covariance \& Corrélation}
+\textbullet{} \textbf{Covariance} : $cov(X,Y) = \mathbb{E}[(X-\mathbb{E}X)(Y-\mathbb{E}Y)] = \mathbb{E}(XY) - \mathbb{E}X\mathbb{E}Y$.\\
+\textit{Propriétés} :
+1. $cov(X,Y) = cov(Y,X)$, $cov(X,X) = var(X)$.\\
+2. Bilinéarité : $cov(X+Y, Z+W) = cov(X,Z) + cov(Y,Z) + cov(X,W) + cov(Y,W)$.\\
+3. Échelle : $cov(aX+b, cY+d) = ac \cdot cov(X,Y)$.\\
+4. Somme : $var(X \pm Y) = var(X) + var(Y) \pm 2cov(X,Y)$.\\
+5. $X,Y \text{ indép.} \implies cov(X,Y) = 0$ (réciproque fausse).\\
+\textbullet{} \textbf{Corrélation ($\rho_{X,Y}$)} : $\rho_{X,Y} = \frac{cov(X,Y)}{\sqrt{var(X)var(Y)}} \in [-1, 1]$.\\
+\textit{Propriétés} :
+1. $\rho(a+bX, c+dY) = \text{sign}(bd)\rho(X,Y)$.\\
+2. $\rho(X,X) = 1$, $\rho(X,-X) = -1$ ($X \neq cst$).\\
+3. $\rho_{X,Y} = 0 \centernot\implies \text{indépendance}$ (liens non linéaires).\\
+\textbullet{} \textbf{Empirique} : $r = \frac{\sum (x_j - \overline{x})(y_j - \overline{y})}{\sqrt{\sum (x_j-\overline{x})^2 \sum (y_j-\overline{y})^2}}$.
+
+\subsection{Comportements Limites}
+$X_i$ i.i.d., $\mathbb{E}(X_1) = \mu$.\\
+\textbullet{} \textbf{LGN Faible} : Si $var(X_1) < \infty \implies \forall \epsilon > 0, \; \mathbb{P}(|\overline{X}_n - \mu| \ge \epsilon) \xrightarrow{n\to\infty} 0$ (Conv. proba).\\
+\textbullet{} \textbf{LGN Forte} : Si $\mathbb{E}(X_1) < \infty \implies \mathbb{P}(\lim_{n \to \infty} \overline{X}_n = \mu) = 1$ (Conv. p.s.).
+
+\subsection{TCL \& Méthode Delta}
+\textbullet{} \textbf{TCL} : Si $0 < \sigma^2 = var(X_i) < \infty$ :
+$$Z_n = \sqrt{n}\frac{\overline{X}_n - \mu}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}(0,1) \implies \overline{X}_n \overset{app}{\sim} \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right)$$
+\textbullet{} \textbf{Delta} : $g$ dérivable en $\mu$ et $g'(\mu) \neq 0$ :
+$$\sqrt{n}\frac{g(\overline{X}_n) - g(\mu)}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}\left(0, [g'(\mu)]^2\right) \implies g(\overline{X}_n) \overset{app}{\sim} \mathcal{N}\left(g(\mu), \frac{[g'(\mu)]^2\sigma^2}{n}\right)$$
+
+\subsection{Quantiles théoriques}
+$x_p = \inf\{x : F(x) \ge p\}$. Si $F$ continue $\nearrow$ : $x_p = F^{-1}(p)$. $x_{0.5} = med$.
+
+\section{Estimation Ponctuelle}
+$X_1, \dots, X_n \overset{iid}{\sim} f(x;\theta)$.
+
+\subsection{Moments (MOM) \& Max Vraisemblance (ML)}
+\textbullet{} \textbf{MOM} : Égaler $m_k(\theta) = \mathbb{E}_\theta(X^k)$ et $\hat{m}_k = \frac{1}{n}\sum X_i^k$.\\
+\textbullet{} \textbf{ML} : $L(\theta) = \prod f(x_{i};\theta)$, $l(\theta) = \sum \log f(x_{i};\theta)$. $\hat{\theta}_{ML}$ vérifie $l'(\hat{\theta}_{ML}) = 0$ et $l''(\hat{\theta}_{ML}) < 0$.
+
+\subsection{Propriétés \& Arbitrage Biais-Variance}
+\textbullet{} $b_\theta(\hat{\theta}) = \mathbb{E}_\theta(\hat{\theta}) - \theta$.\\
+\textbullet{} $EQM_\theta(\hat{\theta}) = \mathbb{E}_\theta[(\hat{\theta}-\theta)^{2}] = Var_\theta(\hat{\theta}) + [b_\theta(\hat{\theta})]^2$.\\
+\textbullet{} \textbf{Variance sous $\mathcal{N}(\mu, \sigma^2)$} : Estim. $\hat{\sigma}^a = a \hat{\sigma}_n^2$ avec $\hat{\sigma}_n^2 = \frac{1}{n}\sum(X_i-\overline{X})^2$. $\mathbb{E}(\hat{\sigma}_n^2) = \frac{n-1}{n}\sigma^2$, $Var(n\hat{\sigma}_n^2) = 2\sigma^4(n-1)$ :
+\begin{itemize}
+    \itemsep=0pt \parskip=0pt \parsep=0pt
+    \item $a = \frac{n}{n-1} \implies S_n^2$ sans biais.
+    \item $a = 0 \implies Var=0$, $EQM=\sigma^2$ (max).
+    \item $a = \frac{n}{n+1} \implies$ Minimise l'EQM.
+\end{itemize}
+
+\subsection{Information de Fisher \& Asymptotique}
+\textbullet{} $I_1(\theta) = -\mathbb{E}_\theta[\frac{\partial^2}{\partial \theta^2} \log f(X_1;\theta)] \implies I_n(\theta) = n I_1(\theta) = -\mathbb{E}_\theta(l''(\theta))$.\\
+\textbullet{} Obs. : $J_n(\hat{\theta}_{ML}) = -l''(\hat{\theta}_{ML})$. Var. Asympt. : $1/J_n(\hat{\theta}_{ML})$.\\
+\textbullet{} Modèles réguliers ($n \to \infty$) : $\hat{\theta}_{ML} \overset{app}{\sim} \mathcal{N}(\theta, \frac{1}{I_n(\theta)}) \approx \mathcal{N}(\theta, \frac{1}{J_n(\hat{\theta}_{ML})})$.\\
+\textit{Attention} : Échoue si support dépend de $\theta$ (ex : $U(0,\theta)$).
+
+\subsection{Loi de Pareto (Queues Lourdes)}
+$f(x) = \alpha x^{-1-\alpha}$ sur $[1, \infty)$, $\alpha > 0$. $\mathbb{E}(X^r) = \frac{\alpha}{\alpha-r}$ si $r < \alpha$, sinon $\infty$.\\
+$\mathbb{E}(X) < \infty \iff \alpha > 1$ et $Var(X) < \infty \iff \alpha > 2$. Si non vérifié $\implies$ TCL et propriétés des variances s'effondrent.
+
+\section{Intervalles de Confiance (IC)}
+
+\subsection{Théorie des Pivots}
+$T(Y, \theta)$ pivot si sa loi est exacte et indépendante de $\theta$. Résoudre $\mathbb{P}_\theta(a \le T(Y,\theta) \le b) = 1-\alpha$.
+
+\subsection{IC - Cas Normal $\mathcal{N}(\mu, \sigma^2)$}
+\textbullet{} \textbf{$\sigma^2$ connue} : Pivot $Z_n = \sqrt{n}\frac{\overline{Y}_n - \mu}{\sigma} \sim \mathcal{N}(0,1) \implies \text{IC}_{1-\alpha} = [ \overline{Y}_n \pm \frac{z_{1-\alpha/2}}{\sqrt{n}}\sigma ]$.\\
+\textbullet{} \textbf{$\sigma^2$ inconnue} : Pivot $T_n = \sqrt{n}\frac{\overline{Y}_n - \mu}{S_n} \sim t_{n-1}$.
+$$\text{IC bilat } (1-\alpha) : [ \overline{Y}_n \pm \frac{t_{n-1, 1-\alpha/2}}{\sqrt{n}}S_n ]$$
+$$\text{IC unilat gauche} : [ \overline{Y}_n - \frac{t_{n-1, 1-\alpha}}{\sqrt{n}}S_n, \; +\infty [$$
+\textbullet{} Queues de Student plus lourdes : $|t_{n-1,\beta}| > |z_{\beta}|$ ($\beta \neq 0.5$). Si $n \to \infty$, $t_{n-1} \to \mathcal{N}(0,1)$.
+
+\subsection{Pivots Exacts Non Normaux}
+\textbullet{} \textbf{Uniforme $U(0,\theta)$} : $M_n = \max(Y_i)$. Pivot $T = \frac{M_n}{\theta}$. $F_T(t) = t^n$ ($t \in (0,1)$). $\mathbb{P}_\theta(\alpha^{1/n} \le T \le 1) = 1-\alpha \implies \text{IC}_{1-\alpha} = [ M_n, \; \alpha^{-1/n}M_n ]$.
+
+\subsection{IC Asymptotiques ($n \to \infty$)}
+\textbullet{} \textbf{Via EMV} : $\theta \in [ \hat{\theta}_{ML} \pm \frac{z_{1-\alpha/2}}{\sqrt{J_n(\hat{\theta}_{ML})}} ]$.\\
+\textbullet{} \textbf{Via TCL (Ex: $U(0,\theta)$)} : $\mathbb{E}Y = \frac{\theta}{2}$, $VarY = \frac{\theta^2}{12} \implies Z_n = \frac{\sqrt{n}(\overline{Y}_n - \theta/2)}{\sqrt{\theta^2/12}} \xrightarrow{\mathcal{L}} \mathcal{N}(0,1)$.
+$$\theta \in \left[ \frac{\overline{Y}_n}{\frac{1}{2} + \frac{z_{1-\alpha/2}}{\sqrt{12n}}}, \; \frac{\overline{Y}_n}{\frac{1}{2} - \frac{z_{1-\alpha/2}}{\sqrt{12n}}} \right]$$
+
+\section{Régression Linéaire Simple}
+$y_j = a + \beta x_j + \epsilon_j$, $\epsilon_j \overset{iid}{\sim} \mathcal{N}(0, \sigma^2)$, $x_j$ fixés non tous égaux.
+
+\subsection{Moindres Carrés (MCO)}
+Min $S(a,\beta) = \sum \{y_j - (a+\beta x_j)\}^2$. Hessienne : $H = \begin{pmatrix} 2n & 2n\overline{x}_n \\ 2n\overline{x}_n & 2\sum x_i^2 \end{pmatrix}$, $\det(H) = 4n\sum(x_i-\overline{x}_n)^2 > 0 \implies$ min global unique.
+$$\hat{\beta}_{n} = \frac{\sum(x_{j}-\overline{x}_{n})y_{j}}{\sum(x_{j}-\overline{x}_{n})^{2}} = \frac{\sum x_j y_j - n\overline{x}_n\overline{y}_n}{\sum x_j^2 - n\overline{x}_n^2}, \quad \hat{a}_{n} = \overline{y}_{n} - \hat{\beta}_{n}\overline{x}_{n}$$
+
+\subsection{Résidus \& ANOVA}
+$r_j = y_j - \hat{y}_j$. Propriétés : $\sum r_j = 0$, $\sum x_j r_j = 0$, $\sum \hat{y}_j r_j = 0$.\\
+ANOVA : $\sum (y_j - \overline{y}_n)^2 = \sum (\hat{y}_j - \overline{y}_n)^2 + \sum r_j^2 \implies SC_{\text{Total}} = SC_R + SC_E$.\\
+\textbullet{} $R^2 = \frac{SC_R}{SC_{\text{Total}}} = 1 - \frac{SC_E}{SC_{\text{Total}}}$. \quad \textbullet{} $R^2_{\text{adj}} = 1 - \frac{SC_E / (n-2)}{SC_{\text{Total}} / (n-1)}$.\\
+\textbullet{} Estim. sans biais de $\sigma^2$ : $S_n^2 = \frac{SC_E}{n-2} = \frac{1}{n-2}\sum r_j^2$.
+
+\subsection{Inférence sur la Pente $\beta$}
+\textbullet{} $\hat{\beta}_n \sim \mathcal{N}(\beta, \sigma^2 / \sum(x_i-\overline{x}_n)^2)$. \quad \textbullet{} $\hat{sd}(\hat{\beta}_n) = S_n / \sqrt{\sum (x_i - \overline{x}_n)^2}$.\\
+\textbullet{} Pivot : $\frac{\hat{\beta}_n - \beta}{\hat{sd}(\hat{\beta}_n)} \sim t_{n-2} \implies \text{IC}_{1-\alpha} = [ \hat{\beta}_n \pm t_{n-2, \; 1-\alpha/2} \hat{sd}(\hat{\beta}_n) ]$.\\
+\textbullet{} Test $H_0 : \beta = \beta_0$ vs $H_1 : \beta \neq \beta_0$ : Stat. $t_{\text{obs}} = \frac{\hat{\beta}_n - \beta_0}{\hat{sd}(\hat{\beta}_n)}$. Rejet si $|t_{\text{obs}}| > t_{n-2, \; 1-\alpha/2}$.\\
+\textbullet{} Prédiction pour $x_+$ : $\hat{y}_{+} = \hat{a}_n + \hat{\beta}_n x_+$.
+
+\section{Distributions \& Estimations}
+
+\scalebox{.65}{
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Loi} & \textbf{Support} & $f(x)$ ou $\mathbb{P}(X=x)$ & $\mathbb{E}(X)$ & $Var(X)$ \\ \midrule
+$\mathbf{U(0,\theta)}$ & $[0,\theta]$ & $1/\theta$ & $\theta/2$ & $\theta^2/12$ \\
+$\mathbf{\exp(\lambda)}$ & $[0,+\infty[$ & $\lambda e^{-\lambda x}$ & $1/\lambda$ & $1/\lambda^2$ \\
+$\mathbf{\text{Poiss}(\lambda)}$ & $\mathbb{N}$ & $\frac{\lambda^x}{x!}e^{-\lambda}$ & $\lambda$ & $\lambda$ \\
+$\mathbf{\mathcal{B}(m,p)}$ & $\{0,..,m\}$ & $\binom{m}{x}p^x(1-p)^{m-x}$ & $mp$ & $mp(1-p)$ \\
+$\mathbf{\mathcal{N}(\mu,\sigma^2)}$ & $\mathbb{R}$ & $\frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ & $\mu$ & $\sigma^2$ \\ \bottomrule
+\end{tabular}
+}
+
+\subsection{Résultats ML \& Fisher par loi}
+\textbullet{} $U(0,\theta)$ : $\hat{\theta}_{MOM} = 2\overline{X}_n$, $\hat{\theta}_{ML} = \max(X_i)$. Non régulier.\\
+\textbullet{} $\exp(\lambda)$ : $\hat{\lambda}_{ML} = 1/\overline{X}_n$. $l'=\frac{n}{\lambda} - n\overline{X}$, $l''=-\frac{n}{\lambda^2}$. $I_n = \frac{n}{\lambda^2}$, $J_n = n\overline{X}^2$.\\
+\textbullet{} $\text{Poiss}(\lambda)$ : $\hat{\lambda}_{ML} = \overline{X}_n$. $l'=\frac{n\overline{X}}{\lambda}-n$, $l''=-\frac{n\overline{X}}{\lambda^2}$. $I_n = \frac{n}{\lambda}$, $J_n = \frac{n}{\overline{X}}$.\\
+\textbullet{} $\mathcal{B}(m,p)$ : $\hat{p}_{ML} = \frac{\overline{X}}{m}$. $l'' = -\frac{n\overline{X}}{p^2} - \frac{nm - n\overline{X}}{(1-p)^2}$. $I_n = \frac{nm}{p(1-p)}$.\\
+\textbullet{} $\mathcal{N}(\mu,\sigma^2)$ : $\hat{\mu}_{ML} = \overline{X}_n$, $\hat{\sigma}^2_{ML} = \hat{\sigma}_n^2$. Si $\sigma^2$ connu : $I_n(\mu) = \frac{n}{\sigma^2}$.
+
+\subsection{Loi Normale Standard $\mathcal{N}(0,1)$}
+\textbullet{} $\phi(z) = \frac{1}{\sqrt{2\pi}}e^{-z^2/2}$, symétrique. Quantiles : $\Phi(-z) = 1 - \Phi(z)$.\\
+\textbullet{} Seuils : $\mathbb{P}(|Z| \le 1) \approx 68.3\%$, $\mathbb{P}(|Z| \le 1.96) = 95\%$, $\mathbb{P}(|Z| \le 2.58) = 99\%$.
+
+\subsection{Tests Khi-deux ($\chi^2$) \& Markov}
+\textbf{Adéquation} ($k$ classes, $o_i$ obs, $e_i$ théo $\ge 5$) :
+$T_n = \sum \frac{(o_i - e_i)^2}{e_i} \xrightarrow{app} \chi^2_\nu$. $\nu = k - 1 - c$ ($c$ param. estimés). Rejet si $t_{\text{obs}} > \chi^2_{\nu, \; 1-\alpha}$.
+
+\textbf{Indépendance} ($h \times k$ classes) : $e_{ij} = \frac{n_{i\cdot} n_{\cdot j}}{n} \implies t_{\text{obs}} = \sum \sum \frac{(n_{ij} - e_{ij})^2}{e_{ij}}$. $\nu = (h-1)(k-1)$. Rejet si $t_{\text{obs}} > \chi^2_{\nu, \; 1-\alpha}$.
+
+\textbf{Markov} : Si $X \ge 0$ et $a > 0 \implies \mathbb{P}(X \ge a) \le \frac{\mathbb{E}(X)}{a}$.
+
+\end{multicols*}
+
+\end{document}
