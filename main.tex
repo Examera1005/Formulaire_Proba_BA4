@@ -123,8 +123,9 @@ Convergence en proba\\
 \textbullet{} \textbf{Loi forte des grands nombres} : Nécessite uniquement $\mathbb{E}(X_1) < \infty$ :\\
 $$\mathbb{P}\left(\lim_{n \to \infty} \overline{X}_n = \mu\right) = 1 \quad$$ Convergence quasi sûre \\
 \subsection{Théorème Central Limite (TCL) \& Delta}
-\textbullet{} \textbf{TCL} : Si $0 < \sigma^2 = var(X_i) < \infty$, alors la variable standardisée converge en loi :
-$$Z_n = \sqrt{n}\frac{\overline{X}_n - \mu}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}(0,1)$$ 
+\textbullet{} \textbf{TCL} : Si $0 < \sigma^2 = Var(X_i) < \infty$, alors la variable standardisée converge en loi :
+$$Z_n = \sqrt{n}\frac{\overline{X}_n - \mu}{\sigma}\xrightarrow{\mathcal{L}} \mathcal{N}(0,1)$$
+or $$ \frac{S_n-n\mathbb{E}[X_1]}{\sqrt{n\cdot Var(X_1)}} \xrightarrow{\mathcal{L}} \mathcal{N}(0,1)$$ 
 $$\implies \overline{X}_n \overset{app}{\sim} \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right)$$
 \textbullet{} \textbf{Méthode Delta} : Soit $g$ une fonction continûment dérivable en $\mu$ telle que $g'(\mu) \neq 0$. Alors :
 $$\sqrt{n}\frac{g(\overline{X}_n) - g(\mu)}{\sigma} \xrightarrow{\mathcal{L}} \mathcal{N}\left(0, [g'(\mu)]^2\right)$$
@@ -158,7 +159,7 @@ Soit $\hat{\sigma}_n^2 = \frac{1}{n}\sum(X_i-\overline{X})^2$. On définit la fa
 \end{itemize}
 
 \subsection{Information de Fisher \& Asymptotique}
-\textbullet{} \textbf{Information de Fisher} :\\
+\textbullet{} \textbf{Information de Fisher Théorique} :\\
 $I_1(\theta) = -\mathbb{E}_\theta\left[\frac{\partial^2}{\partial \theta^2} \log f(X_1;\theta)\right]$\\
 $\implies I_n(\theta) = n \cdot I_1(\theta) = -\mathbb{E}_\theta(l''(\theta))$\\
 \textbullet{} \textbf{Information de Fisher observée} : $J_n(\hat{\theta}_{ML}) = -l''(\hat{\theta}_{ML})$.\\
