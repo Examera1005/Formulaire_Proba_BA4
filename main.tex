@@ -56,6 +56,18 @@ $= \frac{1}{n-1}\left(\sum_{j=1}^{n}y_{j}^{2}-n\overline{y}^{2}\right)$\\
 
 \section{Théorie des Probabilités \& Théorèmes}
 
+\subsection{Changement de Variable ($X \to Y$)}
+Pour $Y = g(X)$ avec $g$ strictement croissante : \\
+$F_Y(y) = \mathbb{P}(g(X) \le y) = \mathbb{P}(X \le g^{-1}(y)) $\\
+$= F_X(g^{-1}(y))$\\
+
+\textbullet{} \textbf{Exemple exponentiel ($Y = e^X$)} :
+$\mathbb{P}(Y > 10) = \mathbb{P}(e^X > 10) $\\
+$= \mathbb{P}(X > \ln(10)) = 1 - F_X(\ln(10))$\\
+
+\textbullet{} \textbf{Formule des densités} ($g \in C^1$ Biject)\\
+$f_Y(y) = f_X(g^{-1}(y)) \times \left| \frac{d}{dy} g^{-1}(y) \right|$\\
+
 \subsection{Théorème de Bayes}
 $\mathbb{P}(A_i | B) = \frac{\mathbb{P}(B | A_i)\mathbb{P}(A_i)}{\sum_{j=1}^k \mathbb{P}(B | A_j)\mathbb{P}(A_j)}$\\
 \textbullet{} \textbf{Forme simple} : $\mathbb{P}(A|B) = \frac{\mathbb{P}(B|A)\mathbb{P}(A)}{\mathbb{P}(B)}$ \quad ($\mathbb{P}(B) = \mathbb{P}(B|A)\mathbb{P}(A) + \mathbb{P}(B|A^c)\mathbb{P}(A^c)$).
@@ -75,6 +87,13 @@ $Var(X) = \int_{-\infty}^{+\infty} (x - \mathbb{E}(X))^2 f_X(x) \, dx$
 $Var(aX + b) = a^2 Var(X)$\\
 $Var(X \pm Y) = Var(X) + Var(Y) \pm 2 \, cov(X,Y)$\\
 Si $X, Y$ indépendantes : $Var(X \pm Y) = Var(X) + Var(Y)$\\
+
+\subsection{Fonction de Survie}
+Soit $X$ une variable aléatoire continue de densité $f(x)$ et de fonction de répartition $F(x) = \mathbb{P}(X \le x) = \int_{-\infty}^{x} f(t) \, dt$. La fonction de survie $S(x)$ est : \\
+$S(x) = \mathbb{P}(X > x) = 1 - F(x) = \int_{x}^{+\infty} f(t) \, dt$\\
+\textbf{Propriété de reconstruction} :\\
+$f(x) = -\frac{d}{dx}S(x)$\\
+
 \subsection{Covariance \& Corrélation théoriques}
 \textbullet{} \textbf{Covariance} : Mesure de dépendance linéaire.\\
 $cov(X,Y) = \mathbb{E}[\{X-\mathbb{E}(X)\}\{Y-\mathbb{E}(Y)\}] =$\\
@@ -139,13 +158,13 @@ Soit $\hat{\sigma}_n^2 = \frac{1}{n}\sum(X_i-\overline{X})^2$. On définit la fa
 \end{itemize}
 
 \subsection{Information de Fisher \& Asymptotique}
-\textbullet{} \textbf{Information de Fisher (un échantillon)} :
-$$I_1(\theta) = -\mathbb{E}_\theta\left[\frac{\partial^2}{\partial \theta^2} \log f(X_1;\theta)\right]$$ 
-$$\implies I_n(\theta) = n \cdot I_1(\theta) = -\mathbb{E}_\theta(l''(\theta))$$
+\textbullet{} \textbf{Information de Fisher} :\\
+$I_1(\theta) = -\mathbb{E}_\theta\left[\frac{\partial^2}{\partial \theta^2} \log f(X_1;\theta)\right]$\\
+$\implies I_n(\theta) = n \cdot I_1(\theta) = -\mathbb{E}_\theta(l''(\theta))$\\
 \textbullet{} \textbf{Information de Fisher observée} : $J_n(\hat{\theta}_{ML}) = -l''(\hat{\theta}_{ML})$.\\
 \textbullet{} \textbf{Variance Asymptotique }:$\frac{1}{J_n(\hat{\theta}_{ML})}$\\
 \textbullet{} \textbf{Propriété asymptotique} : Pour les modèles réguliers, quand $n \to \infty$ :
-$$\hat{\theta}_{ML} \overset{app}{\sim} \mathcal{N}\left(\theta, \; \frac{1}{I_n(\theta)}\right) \approx \mathcal{N}\left(\theta, \; \frac{1}{J_n(\hat{\theta}_{ML})}\right)$$
+$\hat{\theta}_{ML} \overset{app}{\sim} \mathcal{N}\left(\theta, \; \frac{1}{I_n(\theta)}\right) \approx \mathcal{N}\left(\theta, \; \frac{1}{J_n(\hat{\theta}_{ML})}\right)$\\
 \textit{Attention} : Échoue pour les modèles non réguliers où le support dépend du paramètre (ex: Uniforme $U(0,\theta)$).
 
 \subsection{Loi de Pareto (Queues Lourdes)}
@@ -164,7 +183,7 @@ $\text{IC bilatéral } (1-\alpha) : \left[ \overline{Y}_n \pm \frac{z_{1-\alpha/
 \textbullet{} \textbf{Si $\sigma^2$ inconnue} : Estimée par $S_n^2$. Pivot $T_n = \sqrt{n}\frac{\overline{Y}_n - \mu}{S_n} \sim t_{n-1}$.
 $\text{IC bilatéral } (1-\alpha) : \left[ \overline{Y}_n \pm \frac{t_{n-1, 1-\alpha/2}}{\sqrt{n}}S_n \right]$\\
 $\text{IC unilatéral gauche:}$
-$\left[ \overline{Y}_n - \frac{t_{n-1, 1-\alpha}}{\sqrt{n}}S_n, \; +\infty \right[$\\
+$\left[ \overline{Y}_n - \frac{t_{n-1, 1-\alpha}}{\sqrt{n}}S_n, \; \infty \right[$\\
 \textbullet{} \textbf{Propriété des quantiles} : La loi de Student ayant des queues plus lourdes, $|t_{n-1,\beta}| > |z_{\beta}|$ pour tout $\beta \neq 0.5$. Quand $n \to \infty$, $t_{n-1} \to \mathcal{N}(0,1)$.
 
 \subsection{Pivots Exacts Non Normaux}
@@ -175,7 +194,7 @@ $$\text{IC exact } (1-\alpha) : \left[ M_n, \; \alpha^{-1/n}M_n \right]$$
 
 \subsection{IC Asymptotiques ($n \to \infty$)}
 \textbullet{} \textbf{Via l'EMV et l'Information observée} :
-$$\theta \in \left[ \hat{\theta}_{ML} \pm \frac{z_{1-\alpha/2}}{\sqrt{J_n(\hat{\theta}_{ML})}} \right]$$
+$\theta \in \left[ \hat{\theta}_{ML} \pm \frac{z_{1-\alpha/2}}{\sqrt{J_n(\hat{\theta}_{ML})}} \right]$\\
 \textbullet{} \textbf{Via le TCL (Exemple de la loi Uniforme $U(0,\theta)$)} : \\
 $\mathbb{E}(Y) = \frac{\theta}{2}$, $Var(Y) = \frac{\theta^2}{12} \implies Z_n = \frac{\sqrt{n}(\overline{Y}_n - \theta/2)}{\sqrt{\theta^2/12}} \overset{app}{\sim} \mathcal{N}(0,1)$.
 En résolvant l'inéquation $|Z_n| \le z_{1-\alpha/2}$ par rapport à $\theta$, on obtient :
@@ -187,14 +206,14 @@ Modèle : $y_j = a + \beta x_j + \epsilon_j$ avec $\epsilon_j \overset{iid}{\sim
 \subsection{Optimisation \& Moindres Carrés (MCO)}
 Minimisation de la somme des carrés résiduels $S(a,\beta) = \sum \{y_j - (a+\beta x_j)\}^2$.
 Matrice Hessienne globale du système :
-$$H = \begin{pmatrix} 2n & 2n\overline{x}_n \\ 2n\overline{x}_n & 2\sum x_i^2 \end{pmatrix}$$
-$\det(H) = 4n\sum(x_i-\overline{x}_n)^2 > 0 \implies$ Minimum global unique concave.
-$$\hat{\beta}_{n} = \frac{\sum_{j=1}^{n}(x_{j}-\overline{x}_{n})y_{j}}{\sum_{j=1}^{n}(x_{j}-\overline{x}_{n})^{2}} = \frac{\sum x_j y_j - n\overline{x}_n\overline{y}_n}{\sum x_j^2 - n\overline{x}_n^2}$$
-$$\hat{a}_{n} = \overline{y}_{n} - \hat{\beta}_{n}\overline{x}_{n} \implies \text{passe par } (\overline{x}_n, \overline{y}_n)$$
+$H = \begin{pmatrix} 2n & 2n\overline{x}_n \\ 2n\overline{x}_n & 2\sum x_i^2 \end{pmatrix}$\\
+$\det(H) = 4n\sum(x_i-\overline{x}_n)^2 > 0 \implies$ Minimum global unique concave.\\
+$\hat{\beta}_{n} = \frac{\sum_{j=1}^{n}(x_{j}-\overline{x}_{n})y_{j}}{\sum_{j=1}^{n}(x_{j}-\overline{x}_{n})^{2}} = \frac{\sum x_j y_j - n\overline{x}_n\overline{y}_n}{\sum x_j^2 - n\overline{x}_n^2}$\\
+$\hat{a}_{n} = \overline{y}_{n} - \hat{\beta}_{n}\overline{x}_{n} \implies \text{passe par } (\overline{x}_n, \overline{y}_n)$\\
 
 \subsection{Propriétés des Résidus}
-Résidus définis par $r_j = y_j - \hat{y}_j = y_j - (\hat{a}_n + \hat{\beta}_n x_j)$.
-$$\sum_{j=1}^n r_j = 0, \quad \sum_{j=1}^n x_j r_j = 0, \quad \sum_{j=1}^n \hat{y}_j r_j = 0$$
+$r_j = y_j - \hat{y}_j = y_j - (\hat{a}_n + \hat{\beta}_n x_j)$\\
+$\sum_{j=1}^n r_j = 0 \sum_{j=1}^n x_j r_j = 0=\sum_{j=1}^n\hat{y}_j r_j $\\
 
 \subsection{Analyse de la Variance (ANOVA)}
 Décomposition de la somme des carrés totale :
@@ -219,7 +238,7 @@ Pour une nouvelle valeur $x_+$, la prévision de la réponse est $\hat{y}_{+} = 
 
 \section{Distributions, Moments \& Estimations}
 
-\scalebox{.67}{
+\scalebox{.69}{
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 \textbf{Loi} & \textbf{Support} & $f(x)$ ou $\mathbb{P}(X=x)$ & $\mathbb{E}(X)$ & $Var(X)$ \\ \midrule
@@ -243,6 +262,7 @@ $\mathbf{\mathcal{N}(\mu,\sigma^2)}$ & $\mathbb{R}$ & $\frac{1}{\sqrt{2\pi\sigma
 \textbullet{} Propriétés cruciales des quantiles : $\Phi(-z) = 1 - \Phi(z)$. $\mathbb{P}(z_1 \le Z \le z_2) = \Phi(z_2) - \Phi(z_1)$.\\
 \textbullet{} Seuils empiriques : $\mathbb{P}(|Z| \le 1) \approx 68.3\%$, $\mathbb{P}(|Z| \le 1.96) = 95\%$, $\mathbb{P}(|Z| \le 2.58) = 99\%$.
 
+
 \subsection{Tests Khi-deux ($\chi^2$)}
 \textbf{Adéquation} : $k$ classes, $o_i$ obs, $e_i$ théo ($\sum o_i = \sum e_i = n$, $e_i \ge 5$).
 $$T_n = \sum_{i=1}^{k} \frac{(o_i - e_i)^2}{e_i} \xrightarrow{app} \chi^2_\nu$$
@@ -253,8 +273,35 @@ Rejet $H_0 \iff t_{\text{obs}} > \chi^2_{\nu, \; 1-\alpha}$ \quad $p_{\text{obs}
 $$e_{ij} = \frac{n_{i\cdot} n_{\cdot j}}{n} \implies t_{\text{obs}} = \sum_{i=1}^{h} \sum_{j=1}^{k} \frac{(n_{ij} - e_{ij})^2}{e_{ij}}$$
 $\nu = (h-1)(k-1)$ \quad Rejet $\iff t_{\text{obs}} > \chi^2_{(h-1)(k-1), \; 1-\alpha}$.
 \section{Inégalitées}
-\textbf{Markov} : Soit $X$ une variable aléatoire positive ($X \ge 0$) et $a > 0$ :
-$$\mathbb{P}(X \ge a) \le \frac{\mathbb{E}(X)}{a}$$
+\textbf{Markov} : Soit $X$ une var aléatoire et $X \ge 0$ et $a > 0$ :
+$\mathbb{P}(X \ge a) \le \frac{\mathbb{E}(X)}{a}$\\
+
+
+\subsection{Propriété de Perte de Mémoire}
+Une loi est dite \textbf{sans mémoire} si $\mathbb{P}(X > s + t \mid X > s) = \mathbb{P}(X > t)$.
+
+\scalebox{.7}{
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Type} & \textbf{Loi} & \textbf{Mémoire} \\ \midrule
+\textbf{Continu} & $\exp(\lambda)$ & \textbf{Aucune} \\ \addlinespace
+\textbf{Discret} & Géométrique $p(1-p)^{k-1}$ & \textbf{Aucune}  \\ \addlinespace
+\textbf{Autres} & $\text{Poiss}(\lambda)$ & \textit{Processus}  \\ \bottomrule
+\end{tabular}
+}
+\subsection{Propriétés de la Loi de Poisson ($\text{Poiss}$)}
+
+\textbullet{} \textbf{Processus Poisson} : 
+Si  temps inter-événements sont $T_i \overset{iid}{\sim} \text{Exp}(\lambda)$,  le nombre d'événements $N(t)$ sur un intervalle $t$ suit :
+$N(t) \sim \text{Poiss}(\lambda t)$\\
+
+\textbullet{} \textbf{Approx d'événements rares} : 
+Lim d'une Binomiale $\mathcal{B}(n,p)$ quand $n \to \infty$ et $p \to 0$ avec $n p = \lambda$ :
+$X \sim \mathcal{B}(n,p) \xrightarrow{\mathcal{L}} \text{Poiss}(\lambda)$\\
+
+\textbullet{} \textbf{Stabilité par sommation} : 
+Si $X \sim \text{Poiss}(\lambda_1)$ et $Y \sim \text{Poiss}(\lambda_2)$ sont indépendantes :
+$$X + Y \sim \text{Poiss}(\lambda_1 + \lambda_2)$$
 
 
 
